@@ -18,12 +18,19 @@ class Books extends Component {
 
   // When the component mounts, load all books and save them to this.state.books
   componentDidMount() {
+    const key = "AIzaSyC3iEmcKziS5dkrFVLvd_7WHasS9cLQCxA";
     axios
-      .get("https://www.googleapis.com/books/v1/volumes/?q=run")
-      .then(response => response.items.json())
+      .get("https://www.googleapis.com/books/v1/volumes/?q=run&key=" + key)
+      // .get("https://www.googleapis.com/books/v1/volumes/?q=run")
+      .then(response => {
+        console.log(response.data.items);
+        response.items.json();
+        // res.json(response.data.items);
+      })
       .then(res => {
         console.log(res);
         const { books } = res;
+        console.log(books);
         console.log(books[0]);
         this.setState({
           allbooks: books,
@@ -83,8 +90,8 @@ class Books extends Component {
   };
 
   render() {
-    // var { isLoaded, books } = this.state;
-    // console.log(books);
+    var { isLoaded, books } = this.state;
+    console.log(books);
     // console.log(isLoaded);
     // if (!isLoaded) {
     //   return <div className="bg-info text-center">Loading...</div>;
@@ -121,9 +128,7 @@ class Books extends Component {
             </FormGroup>
             <Button>Submit</Button>
           </Form>
-          <ul>
-            <li />
-          </ul>
+          <ul>{/* <li /> */}</ul>
           <Results />
         </Container>
       </div>
