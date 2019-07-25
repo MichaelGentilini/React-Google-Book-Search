@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 // import API from "./utils/Api.js";
-import { Button, Form, FormGroup, Label, Input, Container } from "reactstrap";
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Container,
+  Card,
+} from "reactstrap";
 import axios from "axios";
 import Results from "./Results.js";
 
@@ -24,23 +32,11 @@ class Books extends Component {
       // .get("https://www.googleapis.com/books/v1/volumes/?q=run")
       .then(response => {
         console.log(response.data.items);
-        response.items.json();
-        // res.json(response.data.items);
-      })
-      .then(res => {
-        console.log(res);
-        const { books } = res;
-        console.log(books);
-        console.log(books[0]);
+
         this.setState({
-          allbooks: books,
+          allbooks: response.data.items,
+          isLoaded: true,
         });
-        //   title: "",
-        //   authors: "",
-        //   image: "",
-        //   link: "",
-        //   description: "",
-        //   date: "",
       })
       .catch(err => console.log(err));
   }
@@ -90,12 +86,22 @@ class Books extends Component {
   };
 
   render() {
-    var { isLoaded, books } = this.state;
-    console.log(books);
-    // console.log(isLoaded);
-    // if (!isLoaded) {
-    //   return <div className="bg-info text-center">Loading...</div>;
-    // } else {
+    var { isLoaded, allbooks } = this.state;
+    // console.log(allbooks);
+
+    if (!isLoaded) {
+      return <div className="bg-info text-center">Loading...</div>;
+    }
+
+    // const books = allbooks.map(book => (
+    //   <Card key={book.id}></Card>;
+    // );
+
+    // const presImages = presidentData.map(image => (
+    //   <Button key={image.id} id={image.id} href={image.imgUrl} />
+    // ));
+
+    // else {
     //   return <div className="bg-success text-center text-white">Loaded</div>;
     // }
 
@@ -128,8 +134,30 @@ class Books extends Component {
             </FormGroup>
             <Button>Submit</Button>
           </Form>
-          <ul>{/* <li /> */}</ul>
-          <Results />
+          {this.state.allbooks.map(book => {
+            return (
+              <Results
+                key={book.id}
+                title={book.volumeInfo.title}
+                author={book.volumeInfo.authors}
+                image={book.volumeInfo.imageLinks.thumbnail}
+                desc={book.volumeInfo.description}
+              />
+              //   <a href={"/books/" + book.id}>
+              //     <strong>
+
+              //     </strong>
+              //     <img src= alt="Image" />
+              //     <p>{book.volumeInfo.description}</p>
+              //   </a>
+            );
+          })}
+          {/* /> */}
+          {/* {this.state.books.length ? ( */}
+          <Card />
+          {/* ) : (
+            <h3>No Results to Display</h3>
+          )} */}
         </Container>
       </div>
     );
