@@ -29,7 +29,7 @@ class Books extends Component {
 
   // When the component mounts, load all books and save them to this.state.books
   componentDidMount() {
-    this.searchGoogle();
+    this.searchGoogle("React");
   }
 
   // Loads all books  and sets them to this.state.books
@@ -39,7 +39,7 @@ class Books extends Component {
       // .get("https://www.googleapis.com/books/v1/volumes/?q=run")
       .get("https://www.googleapis.com/books/v1/volumes/?q=" + title)
       .then(response => {
-        // console.log(response.data.items);
+        console.log(response.data.items);
         this.setState({
           allbooks: response.data.items,
           isLoaded: true,
@@ -69,6 +69,7 @@ class Books extends Component {
   // Handles updating component state when the user types into the input field
 
   handleInputChange = event => {
+    event.preventDefault();
     const { name, value } = event.target;
     this.setState({
       [name]: value,
@@ -80,29 +81,37 @@ class Books extends Component {
   // Then reload books from the database
   handleFormSubmit = event => {
     event.preventDefault();
-    // if (this.state.title) {
-    //   Api.saveBook({
-    //     title: this.state.title,
-    //   });
-    // }
 
-    this.setState({
-      search: this.state.title,
-    });
-    // if (this.state.title) {
-    //   API.saveBook({
-    //     title: this.state.title,
-    //     author: this.state.author,
-    //     synopsis: this.state.synopsis,
-    //   })
-    //     .then(res => this.loadBooks())
-    //     .catch(err => console.log(err));
-    // console.log("Submitting");
-    // }
+    // this.setState({
+    //   search: this.state.title,
+    // });
+
     this.searchGoogle(this.state.search);
   };
 
+  // if (this.state.title) {
+  //   Api.saveBook({
+  //     title: this.state.title,
+  //   });
+
+  // if (this.state.title) {
+  //   API.saveBook({
+  //     title: this.state.title,
+  //     author: this.state.author,
+  //     synopsis: this.state.synopsis,
+  //   })
+  //     .then(res => this.loadBooks())
+  //     .catch(err => console.log(err));
+  // console.log("Submitting");
+  // }
+
+  // };
+
   render() {
+    this.state.allbooks.map((book, i) => {
+      console.log(i, book.volumeInfo.hasOwnProperty("imageLinks"));
+    });
+
     var { isLoaded } = this.state;
     if (!isLoaded) {
       return <div className="bg-info text-center p-5">Loading...</div>;
@@ -122,23 +131,27 @@ class Books extends Component {
               <FormGroup>
                 <Input
                   type="text"
-                  name="title"
+                  name="search"
                   id="searchTitle"
                   placeholder="Javascript for Dummies"
-                  value={this.state.title}
+                  value={this.state.search}
                   onChange={this.handleInputChange}
                 />
               </FormGroup>
               <Button
                 className="btn-block btn-success"
-                disabled={!this.state.title}
+                disabled={!this.state.search}
                 onClick={this.handleFormSubmit}
               >
                 Submit
               </Button>
             </Card>
           </Form>
-          {this.state.allbooks.map(book => {
+          {this.state.allbooks.map((book, i) => {
+            // console.log(
+            //   book.volumeInfo.imageLinks.hasOwnProperty("imageLinks")
+            // );
+
             // this.setState({
             //   id: book.id,
             //   title: book.volumeInfo.title,
@@ -149,14 +162,25 @@ class Books extends Component {
             //   link: book.volumeInfo.previewLink,
             //   subtitle: book.volumeInfo.subtitle,
             // });
+
             return (
               <Results
                 key={book.id}
                 id={book.id}
                 title={book.volumeInfo.title}
-                author={book.volumeInfo.authors}
+                author={
+                  book.volumeInfo.authors
+                    ? book.volumeInfo.authors
+                        .join(", ")
+                        .replace(/, ((?:.(?!, ))+)$/, " and $1")
+                    : "author unknown"
+                }
                 date={book.volumeInfo.publishedDate}
-                image={book.volumeInfo.imageLinks.thumbnail}
+                image={
+                  book.volumeInfo.imageLinks
+                    ? book.volumeInfo.imageLinks.thumbnail
+                    : "http://www.chattanoogabystander.com/wp-content/uploads/2019/01/book-stack.jpg"
+                }
                 desc={book.volumeInfo.description}
                 link={book.volumeInfo.previewLink}
                 subtitle={book.volumeInfo.subtitle}

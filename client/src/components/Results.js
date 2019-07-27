@@ -14,7 +14,12 @@ function Results(props) {
       <Row>
         <div className="col-2 col-sm-4 text-center">
           {" "}
-          <img src={props.image} className="mt-3 ml-2" alt={props.subtitle} />
+          <img
+            src={props.image}
+            className="mt-3 ml-2"
+            alt={props.subtitle}
+            style={{ width: "100%" }}
+          />
           <Row className="text-center mt-2">
             <button className="btn btn-sm btn-info mx-auto mb-2">Save</button>
           </Row>

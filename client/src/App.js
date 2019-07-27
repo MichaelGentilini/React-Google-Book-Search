@@ -12,10 +12,12 @@ function App() {
     <Router>
       <div className="App mb-5">
         <Nav />
-        <Books />
+        {/* <Search /> */}
+        {/* <Books /> */}
         <Switch>
-          <Route exact path="/" component={Nav} />
+          <Route exact path="/" component={Books} />
           <Route exact path="/books" component={Books} />
+          <Route exact path="/saved" component={BookDetail} />
           <Route exact path="/books/:id" component={BookDetail} />
           <Route component={wrongPage} />
         </Switch>

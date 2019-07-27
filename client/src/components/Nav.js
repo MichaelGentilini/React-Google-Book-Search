@@ -3,14 +3,17 @@ import { Jumbotron, Container, NavbarBrand } from "reactstrap";
 function Nav() {
   return (
     // <div>
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-5 py-4">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5 py-4">
       <a className="navbar-brand" href="/">
-        Google Books Search
-        <img
-          className="ml-5"
-          src="https://www.google.com/googlebooks/about/images/hero_books.jpg"
-          style={{ width: "20%" }}
-        />
+        <h4>
+          {/* {" "}
+          Google Books Search */}
+          <img
+            className="ml-5"
+            src="https://www.google.com/googlebooks/about/images/hero_books.jpg"
+            style={{ width: "20%" }}
+          />
+        </h4>
       </a>
       <div>
         <button className="btn btn-success text-left mr-3">Search</button>
