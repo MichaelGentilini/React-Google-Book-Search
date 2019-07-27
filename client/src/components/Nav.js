@@ -2,20 +2,28 @@ import React from "react";
 import { Jumbotron, Container, NavbarBrand } from "reactstrap";
 function Nav() {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <NavbarBrand href="https://www.google.com/googlebooks/about/images/hero_books.jpg" />
-        {/* <a className="navbar-brand" href="/">
-          Google Books List
-          <img src="https://www.google.com/googlebooks/about/images/hero_books.jpg" />
-        </a> */}
-      </nav>
-      <Container>
-        <Jumbotron className="mt-5 text-white bg-danger">
-          <h1>Welcome to the Google Book Search</h1>
-        </Jumbotron>
-      </Container>
-    </div>
+    // <div>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-5 py-4">
+      <a className="navbar-brand" href="/">
+        Google Books Search
+        <img
+          className="ml-5"
+          src="https://www.google.com/googlebooks/about/images/hero_books.jpg"
+          style={{ width: "20%" }}
+        />
+      </a>
+      <div>
+        <button className="btn btn-success text-left mr-3">Search</button>
+        <button className="btn btn-info text-left">Saved</button>
+      </div>
+    </nav>
+
+    //   <Container className="mt-2">
+    //     <Jumbotron className="mt-2 text-white bg-danger">
+    //       <h1>Google Book Search</h1>
+    //     </Jumbotron>
+    //   </Container>
+    // </div>
   );
 }
 

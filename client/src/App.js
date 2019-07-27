@@ -1,21 +1,26 @@
-import React, { Component } from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Books from "./components/Books.js";
 import Nav from "./components/Nav.js";
-import Results from "./components/Results.js";
-import { Container, Card, CardHeader } from "reactstrap";
-import axios from "axios";
+import wrongPage from "./components/NothingFound.js";
+import BookDetail from "./components/BookDetail.js";
+import Search from "./components/Search.js";
 
 function App() {
   return (
-    <div className="App">
-      <Nav />
-      <Container>
+    <Router>
+      <div className="App mb-5">
+        <Nav />
         <Books />
-
-        {/* <Results /> */}
-      </Container>
-    </div>
+        <Switch>
+          <Route exact path="/" component={Nav} />
+          <Route exact path="/books" component={Books} />
+          <Route exact path="/books/:id" component={BookDetail} />
+          <Route component={wrongPage} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

@@ -1,45 +1,52 @@
 import React, { Component } from "react";
-// import API from "./utils/Api.js";
 import {
   Button,
+  Card,
+  CardHeader,
   Form,
   FormGroup,
-  Label,
   Input,
   Container,
-  Card,
 } from "reactstrap";
-import axios from "axios";
 import Results from "./Results.js";
+import Api from "../utils/Api.js";
+import axios from "axios";
 
 class Books extends Component {
   // Setting our component's initial state
   state = {
     allbooks: [],
+    search: "",
     title: "",
-    authors: "",
+    author: "",
+    date: "",
+    description: "",
     image: "",
     link: "",
-    description: "",
-    date: "",
+    subtitle: "",
+    id: "",
   };
 
   // When the component mounts, load all books and save them to this.state.books
   componentDidMount() {
-    const key = "AIzaSyC3iEmcKziS5dkrFVLvd_7WHasS9cLQCxA";
-    axios
-      .get("https://www.googleapis.com/books/v1/volumes/?q=run&key=" + key)
-      // .get("https://www.googleapis.com/books/v1/volumes/?q=run")
-      .then(response => {
-        console.log(response.data.items);
+    this.searchGoogle();
+  }
 
+  // Loads all books  and sets them to this.state.books
+  searchGoogle = title => {
+    // const URL = "https://www.googleapis.com/books/v1/volumes/?q="+{this.state.title}
+    axios
+      // .get("https://www.googleapis.com/books/v1/volumes/?q=run")
+      .get("https://www.googleapis.com/books/v1/volumes/?q=" + title)
+      .then(response => {
+        // console.log(response.data.items);
         this.setState({
           allbooks: response.data.items,
           isLoaded: true,
         });
       })
       .catch(err => console.log(err));
-  }
+  };
 
   // loadBooks = () => {};
 
@@ -63,17 +70,26 @@ class Books extends Component {
 
   handleInputChange = event => {
     const { name, value } = event.target;
-    console.log(`typing ${value}`);
     this.setState({
       [name]: value,
     });
+    console.log(`typing ${value}`);
   };
 
   // When the form is submitted, use the API.saveBook method to save the book data
   // Then reload books from the database
   handleFormSubmit = event => {
     event.preventDefault();
-    // if (this.state.title && this.state.author) {
+    // if (this.state.title) {
+    //   Api.saveBook({
+    //     title: this.state.title,
+    //   });
+    // }
+
+    this.setState({
+      search: this.state.title,
+    });
+    // if (this.state.title) {
     //   API.saveBook({
     //     title: this.state.title,
     //     author: this.state.author,
@@ -81,83 +97,72 @@ class Books extends Component {
     //   })
     //     .then(res => this.loadBooks())
     //     .catch(err => console.log(err));
-    console.log("Submitting");
+    // console.log("Submitting");
     // }
+    this.searchGoogle(this.state.search);
   };
 
   render() {
-    var { isLoaded, allbooks } = this.state;
-    // console.log(allbooks);
-
+    var { isLoaded } = this.state;
     if (!isLoaded) {
-      return <div className="bg-info text-center">Loading...</div>;
+      return <div className="bg-info text-center p-5">Loading...</div>;
     }
-
-    // const books = allbooks.map(book => (
-    //   <Card key={book.id}></Card>;
-    // );
-
-    // const presImages = presidentData.map(image => (
-    //   <Button key={image.id} id={image.id} href={image.imgUrl} />
-    // ));
-
-    // else {
-    //   return <div className="bg-success text-center text-white">Loaded</div>;
-    // }
-
     return (
       <div>
         <Container>
-          <Form className="text-left" onSubmit={this.handleFormSubmit}>
-            <h4 className="text-center">Enter Title or Author</h4>
-            <FormGroup>
-              <Label for="title">Title</Label>
-              <Input
-                type="text"
-                name="title"
-                id="searchTitle"
-                placeholder="Javascript for Dummies"
-                value={this.state.title}
-                onChange={this.handleInputChange}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="author">Author(s)</Label>
-              <Input
-                type="text"
-                name="authors"
-                id="searchAuthor"
-                placeholder="johnny Depp"
-                value={this.state.authors}
-                onChange={this.handleInputChange}
-              />
-            </FormGroup>
-            <Button>Submit</Button>
+          <Form
+            className="text-left"
+            name="search"
+            onSubmit={this.handleInputChange}
+          >
+            <Card>
+              <CardHeader>
+                <h2 className="text-center">Enter Title or Subject</h2>
+              </CardHeader>
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="title"
+                  id="searchTitle"
+                  placeholder="Javascript for Dummies"
+                  value={this.state.title}
+                  onChange={this.handleInputChange}
+                />
+              </FormGroup>
+              <Button
+                className="btn-block btn-success"
+                disabled={!this.state.title}
+                onClick={this.handleFormSubmit}
+              >
+                Submit
+              </Button>
+            </Card>
           </Form>
           {this.state.allbooks.map(book => {
+            // this.setState({
+            //   id: book.id,
+            //   title: book.volumeInfo.title,
+            //   author: book.volumeInfo.authors,
+            //   date: book.volumeInfo.publishedDate,
+            //   image: book.volumeInfo.imageLinks.thumbnail,
+            //   desc: book.volumeInfo.description,
+            //   link: book.volumeInfo.previewLink,
+            //   subtitle: book.volumeInfo.subtitle,
+            // });
             return (
               <Results
                 key={book.id}
+                id={book.id}
                 title={book.volumeInfo.title}
                 author={book.volumeInfo.authors}
+                date={book.volumeInfo.publishedDate}
                 image={book.volumeInfo.imageLinks.thumbnail}
                 desc={book.volumeInfo.description}
+                link={book.volumeInfo.previewLink}
+                subtitle={book.volumeInfo.subtitle}
               />
-              //   <a href={"/books/" + book.id}>
-              //     <strong>
-
-              //     </strong>
-              //     <img src= alt="Image" />
-              //     <p>{book.volumeInfo.description}</p>
-              //   </a>
             );
           })}
-          {/* /> */}
-          {/* {this.state.books.length ? ( */}
-          <Card />
-          {/* ) : (
-            <h3>No Results to Display</h3>
-          )} */}
         </Container>
       </div>
     );
