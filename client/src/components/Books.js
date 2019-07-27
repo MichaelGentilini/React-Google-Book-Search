@@ -29,14 +29,12 @@ class Books extends Component {
 
   // When the component mounts, load all books and save them to this.state.books
   componentDidMount() {
-    this.searchGoogle("React");
+    this.searchGoogle("REACT");
   }
 
   // Loads all books  and sets them to this.state.books
   searchGoogle = title => {
-    // const URL = "https://www.googleapis.com/books/v1/volumes/?q="+{this.state.title}
     axios
-      // .get("https://www.googleapis.com/books/v1/volumes/?q=run")
       .get("https://www.googleapis.com/books/v1/volumes/?q=" + title)
       .then(response => {
         console.log(response.data.items);
@@ -108,9 +106,9 @@ class Books extends Component {
   // };
 
   render() {
-    this.state.allbooks.map((book, i) => {
-      console.log(i, book.volumeInfo.hasOwnProperty("imageLinks"));
-    });
+    // this.state.allbooks.map((book, i) => {
+    //   console.log(i, book.volumeInfo.hasOwnProperty("imageLinks"));
+    // });
 
     var { isLoaded } = this.state;
     if (!isLoaded) {
@@ -175,13 +173,16 @@ class Books extends Component {
                         .replace(/, ((?:.(?!, ))+)$/, " and $1")
                     : "author unknown"
                 }
-                date={book.volumeInfo.publishedDate}
                 image={
                   book.volumeInfo.imageLinks
                     ? book.volumeInfo.imageLinks.thumbnail
                     : "http://www.chattanoogabystander.com/wp-content/uploads/2019/01/book-stack.jpg"
                 }
-                desc={book.volumeInfo.description}
+                desc={
+                  book.volumeInfo.description
+                    ? book.volumeInfo.description.slice(0, 300)
+                    : "No description was provided"
+                }
                 link={book.volumeInfo.previewLink}
                 subtitle={book.volumeInfo.subtitle}
               />

@@ -1,24 +1,25 @@
-import React from "react";
+import React, { Component } from "react";
 import { Row, Card, CardHeader } from "reactstrap";
 import { Link } from "react-router-dom";
 
 function Results(props) {
+  const { id, title, subtitle, desc, image } = props;
   return (
-    <Card id={props.id} className="mt-3">
+    <Card id={id} className="mt-3">
       <CardHeader>
-        <Link to={"/books/" + props.id}>
-          <h2>{props.title}</h2>
+        <Link to={"/books/" + id}>
+          <h2>{title}</h2>
         </Link>
-        <h6>{props.subtitle}</h6>
+        <h6>{subtitle}</h6>
       </CardHeader>
       <Row>
         <div className="col-2 col-sm-4 text-center">
           {" "}
           <img
-            src={props.image}
+            src={image}
             className="mt-3 ml-2"
-            alt={props.subtitle}
-            style={{ width: "100%" }}
+            alt={subtitle}
+            style={{ maxWidth: "50%", border: "solid lightgrey .2em" }}
           />
           <Row className="text-center mt-2">
             <button className="btn btn-sm btn-info mx-auto mb-2">Save</button>
@@ -29,12 +30,9 @@ function Results(props) {
             {" "}
             <strong>Author:</strong> &nbsp;{props.author}&nbsp;
           </h6>
+          <p>{props.desc}</p>
           <h6>
-            <strong>Published:</strong> &nbsp;{props.date}&nbsp;
-          </h6>
-          {/* <p>{props.desc}</p> */}
-          <h6>
-            <a className="btn btn-warning" href={props.link}>
+            <a className="btn btn-warning mt-2" href={props.link}>
               Preview {props.title}
             </a>
           </h6>

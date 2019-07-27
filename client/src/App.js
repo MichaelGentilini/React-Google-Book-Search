@@ -4,20 +4,19 @@ import "./App.css";
 import Books from "./components/Books.js";
 import Nav from "./components/Nav.js";
 import wrongPage from "./components/NothingFound.js";
+import Saved from "./components/Saved.js";
 import BookDetail from "./components/BookDetail.js";
-import Search from "./components/Search.js";
 
 function App() {
   return (
     <Router>
       <div className="App mb-5">
         <Nav />
-        {/* <Search /> */}
-        {/* <Books /> */}
+        {/* <BookDetail /> */}
         <Switch>
           <Route exact path="/" component={Books} />
           <Route exact path="/books" component={Books} />
-          <Route exact path="/saved" component={BookDetail} />
+          <Route exact path="/saved" component={Saved} />
           <Route exact path="/books/:id" component={BookDetail} />
           <Route component={wrongPage} />
         </Switch>

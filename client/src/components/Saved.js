@@ -9,7 +9,7 @@ import {
   Container,
 } from "reactstrap";
 
-function Search(props) {
+function Saved(props) {
   return (
     <Container>
       <Form
@@ -44,4 +44,4 @@ function Search(props) {
   );
 }
 
-export default Search;
+export default Saved;
