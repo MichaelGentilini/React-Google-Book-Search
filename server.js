@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const routes = "./routes/api";
+const routes = require("./routes");
 // const router = require("express").Router();
 // const booksController = require("./controllers/booksController");
 const mongoose = require("mongoose");
@@ -15,12 +15,12 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
+app.use(routes);
 
 // @ Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mylist");
 
 // Define API routes here
-app.use(routes);
 
 // ! tried this to see if it would help ... nope!
 // router
