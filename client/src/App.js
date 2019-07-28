@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Books from "./components/Books.js";
+import Books from "./components/Books2.js";
 import Nav from "./components/Nav.js";
 import wrongPage from "./components/NothingFound.js";
 import Saved from "./components/Saved.js";

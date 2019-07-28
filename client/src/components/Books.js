@@ -8,7 +8,7 @@ import {
   Input,
   Container,
 } from "reactstrap";
-import Results from "./Results.js";
+import Results from "./Results2.js";
 import Api from "../utils/Api.js";
 import axios from "axios";
 
@@ -19,8 +19,7 @@ class Books extends Component {
     search: "",
     title: "",
     author: "",
-    date: "",
-    description: "",
+    desc: "",
     image: "",
     link: "",
     subtitle: "",
@@ -46,16 +45,42 @@ class Books extends Component {
       .catch(err => console.log(err));
   };
 
-  // loadBooks = () => {};
+  saveThisBook = event => {
+    event.preventDefault();
+    if (this.state.title) {
+      Api.saveBook({
+        title: this.state.title,
+        author: this.state.author,
+        desc: this.state.desc,
+        image: this.state.image,
+        link: this.state.link,
+        subtitle: this.state.subtitle,
+        id: this.state.id,
+      })
+        // .then(res => this.loadThisBook())
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    }
+  };
+
+  // loadThisBook = () => {};
 
   // Loads all books  and sets them to this.state.books
-  // loadBooks = () => {
-  //   API.getBooks()
-  //     .then(res =>
-  //       this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-  //     )
-  //     .catch(err => console.log(err));
-  // };
+  loadThisBook = () => {
+    Api.getBook(this.state.id)
+      .then(res =>
+        this.setState({
+          title: "",
+          author: "",
+          date: "",
+          desc: "",
+          image: "",
+          link: "",
+          subtitle: "",
+        })
+      )
+      .catch(err => console.log(err));
+  };
 
   // Deletes a book from the database with a given id, then reloads books from the db
   // deleteBook = id => {
@@ -106,10 +131,6 @@ class Books extends Component {
   // };
 
   render() {
-    // this.state.allbooks.map((book, i) => {
-    //   console.log(i, book.volumeInfo.hasOwnProperty("imageLinks"));
-    // });
-
     var { isLoaded } = this.state;
     if (!isLoaded) {
       return <div className="bg-info text-center p-5">Loading...</div>;
@@ -145,22 +166,7 @@ class Books extends Component {
               </Button>
             </Card>
           </Form>
-          {this.state.allbooks.map((book, i) => {
-            // console.log(
-            //   book.volumeInfo.imageLinks.hasOwnProperty("imageLinks")
-            // );
-
-            // this.setState({
-            //   id: book.id,
-            //   title: book.volumeInfo.title,
-            //   author: book.volumeInfo.authors,
-            //   date: book.volumeInfo.publishedDate,
-            //   image: book.volumeInfo.imageLinks.thumbnail,
-            //   desc: book.volumeInfo.description,
-            //   link: book.volumeInfo.previewLink,
-            //   subtitle: book.volumeInfo.subtitle,
-            // });
-
+          {this.state.allbooks.map(book => {
             return (
               <Results
                 key={book.id}
@@ -193,5 +199,16 @@ class Books extends Component {
     );
   }
 }
+
+// this.setState({
+//   id: book.id,
+//   title: book.volumeInfo.title,
+//   author: book.volumeInfo.authors,
+//   date: book.volumeInfo.publishedDate,
+//   image: book.volumeInfo.imageLinks.thumbnail,
+//   desc: book.volumeInfo.description,
+//   link: book.volumeInfo.previewLink,
+//   subtitle: book.volumeInfo.subtitle,
+// });
 
 export default Books;

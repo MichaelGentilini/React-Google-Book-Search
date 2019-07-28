@@ -3,7 +3,7 @@ import { Row, Card, CardHeader } from "reactstrap";
 import { Link } from "react-router-dom";
 
 function Results(props) {
-  const { id, title, subtitle, desc, image } = props;
+  const { id, author, title, subtitle, desc, image, link } = props;
   return (
     <Card id={id} className="mt-3">
       <CardHeader>
@@ -28,12 +28,12 @@ function Results(props) {
         <div className="col col-sm-8 mt-2 text-left">
           <h6>
             {" "}
-            <strong>Author:</strong> &nbsp;{props.author}&nbsp;
+            <strong>Author:</strong> &nbsp;{author}&nbsp;
           </h6>
-          <p>{props.desc}</p>
+          <p>{desc}</p>
           <h6>
-            <a className="btn btn-warning mt-2" href={props.link}>
-              Preview {props.title}
+            <a className="btn btn-warning mt-2" href={link}>
+              Preview Here
             </a>
           </h6>
         </div>

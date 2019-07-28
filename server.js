@@ -1,8 +1,11 @@
 const express = require("express");
 const path = require("path");
+const routes = "./routes/api";
+// const router = require("express").Router();
+// const booksController = require("./controllers/booksController");
+const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3001;
 const app = express();
-// const routes = "./routes";
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -13,17 +16,23 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// Define API routes here
-app.get("/everythingIsAwesome", (req, res) => {
-  res.send("Yo, everything is awesome!");
-});
+// @ Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mylist");
 
-// app.use(routes);
+// Define API routes here
+app.use(routes);
+
+// ! tried this to see if it would help ... nope!
+// router
+//   .route("/")
+//   .get(booksController.findAll)
+//   .post(booksController.create);
+
 // Send every other request to the React app
 // Define any API routes before this runs
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// });
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);

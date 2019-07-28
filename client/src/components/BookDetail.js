@@ -15,13 +15,16 @@ class BookDetail extends Component {
   }
 
   render() {
+    console.log(this.props);
+    // const { id, author, title, subtitle, desc, image, link } = this.props;
+    const { author, title, desc } = this.props;
     return (
       <Container>
         <Row>
           <Col size="md-12">
             <Jumbotron>
               <h1>
-                {this.state.book.title} by {this.state.book.author}
+                {title} by {author}Hello
               </h1>
             </Jumbotron>
           </Col>
@@ -30,7 +33,7 @@ class BookDetail extends Component {
           <Col size="md-10 md-offset-1">
             <article>
               <h1>Synopsis</h1>
-              <p>{this.state.book.desc}</p>
+              <p>{desc}</p>
             </article>
           </Col>
         </Row>
