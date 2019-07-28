@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Row, Card, CardHeader } from "reactstrap";
-import { Link } from "react-router-dom";
 import Api from "../utils/Api";
 
 class Results extends Component {
@@ -31,6 +30,7 @@ class Results extends Component {
       desc,
       image,
       link,
+      isSaved: true,
     })
       .then(res => console.log(res.data))
       .catch(err => alert(err));
@@ -41,9 +41,8 @@ class Results extends Component {
     return (
       <Card id={id} className="mt-3">
         <CardHeader>
-          <Link to={"/books/" + id} onChange={this.addThisBook}>
-            <h2>{title}</h2>
-          </Link>
+          <h2>{title}</h2>
+
           <h6>{subtitle}</h6>
         </CardHeader>
         <Row>

@@ -119,7 +119,7 @@ class Books extends Component {
           <Form
             className="text-left"
             name="search"
-            onSubmit={this.handleInputChange}
+            onClick={this.handleFormSubmit}
           >
             <Card>
               <CardHeader>
@@ -138,7 +138,6 @@ class Books extends Component {
               <Button
                 className="btn-block btn-success"
                 disabled={!this.state.search}
-                onClick={this.handleFormSubmit}
               >
                 Submit
               </Button>
@@ -147,9 +146,9 @@ class Books extends Component {
           {this.state.allbooks.map(book => {
             return (
               <div>
-                {/* <button className="btn btn-success mt-5">
+                <button className="btn btn-success mt-5">
                   save this below
-                </button> */}
+                </button>
                 <Results
                   key={book.id}
                   id={book.id}
