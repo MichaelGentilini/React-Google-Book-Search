@@ -43,7 +43,6 @@ class Books extends Component {
         console.log(response.data.items);
         this.setState({
           allbooks: response.data.items,
-          isLoaded: true,
         });
       })
       .catch(err => console.log(err));
@@ -71,25 +70,6 @@ class Books extends Component {
     }
   };
 
-  // loadThisBook = () => {};
-
-  // Loads all books  and sets them to this.state.books
-  loadThisBook = () => {
-    Api.getBook(this.state.id)
-      .then(res =>
-        this.setState({
-          title: "",
-          author: "",
-          date: "",
-          desc: "",
-          image: "",
-          link: "",
-          subtitle: "",
-        })
-      )
-      .catch(err => console.log(err));
-  };
-
   handleInputChange = event => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -98,8 +78,7 @@ class Books extends Component {
     });
   };
 
-  // When the form is submitted, use the API.saveBook method to save the book data
-  // Then reload books from the database
+  // When the form is submitted, search is set in state and passed to google books.
   handleFormSubmit = event => {
     event.preventDefault();
     this.setState({
@@ -109,10 +88,6 @@ class Books extends Component {
   };
 
   render() {
-    // var { isLoaded } = this.state;
-    // if (!isLoaded) {
-    //   return <div className="bg-info text-center p-5">Loading...</div>;
-    // }
     return (
       <div>
         <Container>
@@ -122,7 +97,7 @@ class Books extends Component {
             onClick={this.handleFormSubmit}
           >
             <Card>
-              <CardHeader>
+              <CardHeader className="bg-danger text-white py-5">
                 <h2 className="text-center">Enter Title or Subject</h2>
               </CardHeader>
               <FormGroup>

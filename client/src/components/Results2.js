@@ -99,7 +99,6 @@ class Results extends Component {
                 toggle={this.toggle}
                 className={this.props.className}
               >
-                {/* <ModalHeader toggle={this.toggle}>Saved</ModalHeader> */}
                 <Button
                   className="ml-auto"
                   color="danger"
@@ -108,7 +107,6 @@ class Results extends Component {
                   x
                 </Button>
                 <ModalBody>Your Book Has been Saved!</ModalBody>
-                {/* <ModalFooter /> */}
               </Modal>
             </div>
           </div>
