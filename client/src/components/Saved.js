@@ -22,18 +22,19 @@ class Saved extends Component {
       .then(res =>
         this.setState({
           books: res.data,
-          author: "",
-          title: "",
-          desc: "",
-          image: "",
-          link: "",
-          isSaved: "",
         })
       )
       .then(console.log(this.state))
       .then(console.log(this.state.savedBooks))
       .catch(err => console.log(err));
   }
+
+  deleteThisBook = id => {
+    Api.deleteBook(id)
+      .then(res => this.loadBooks())
+      .then(window.location.reload())
+      .catch(err => console.log(err));
+  };
 
   render() {
     return (
@@ -58,7 +59,10 @@ class Saved extends Component {
                       }}
                     />
                     <Row className="text-center mt-2">
-                      <button className="btn btn-sm btn-danger mx-auto mb-2">
+                      <button
+                        className="btn btn-sm btn-danger mx-auto mb-2"
+                        onClick={() => this.deleteThisBook(book._id)}
+                      >
                         Delete Book
                       </button>
                     </Row>
