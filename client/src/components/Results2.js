@@ -1,16 +1,20 @@
 import React, { Component } from "react";
-import { Row, Card, CardHeader } from "reactstrap";
+import { Button, Modal, ModalBody, Row, Card, CardHeader } from "reactstrap";
 import Api from "../utils/Api";
 
 class Results extends Component {
-  state = {
-    id: "",
-    author: "",
-    link: "",
-    title: "",
-    subtitle: "",
-    desc: "",
-    image: "",
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modal: false,
+    };
+  }
+
+  toggle = () => {
+    this.setState(prevState => ({
+      modal: !prevState.modal,
+    }));
   };
 
   addThisBook = (
@@ -33,6 +37,11 @@ class Results extends Component {
       isSaved: true,
     })
       .then(res => console.log(res.data))
+      .then(
+        this.setState(prevState => ({
+          modal: !prevState.modal,
+        }))
+      )
       .catch(err => alert(err));
   };
 
@@ -84,6 +93,24 @@ class Results extends Component {
                 Preview Here
               </a>
             </h6>
+            <div>
+              <Modal
+                isOpen={this.state.modal}
+                toggle={this.toggle}
+                className={this.props.className}
+              >
+                {/* <ModalHeader toggle={this.toggle}>Saved</ModalHeader> */}
+                <Button
+                  className="ml-auto"
+                  color="danger"
+                  onClick={this.toggle}
+                >
+                  x
+                </Button>
+                <ModalBody>Your Book Has been Saved!</ModalBody>
+                {/* <ModalFooter /> */}
+              </Modal>
+            </div>
           </div>
         </Row>
       </Card>

@@ -146,9 +146,6 @@ class Books extends Component {
           {this.state.allbooks.map(book => {
             return (
               <div>
-                <button className="btn btn-success mt-5">
-                  save this below
-                </button>
                 <Results
                   key={book.id}
                   id={book.id}

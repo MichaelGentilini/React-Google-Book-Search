@@ -30,17 +30,4 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-
-  // // ! Added this after seeing it in seedDB.js
-  // insertMany: function(req, res) {
-  //   db.Book.insertMany(bookSeed)
-  //     .then(data => {
-  //       console.log(data.result.n + " records inserted!");
-  //       process.exit(0);
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //       process.exit(1);
-  //     });
-  // },
 };
