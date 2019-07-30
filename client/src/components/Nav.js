@@ -17,13 +17,6 @@ function Nav() {
         </div>
       </Container>
     </nav>
-
-    //   <Container className="mt-2">
-    //     <Jumbotron className="mt-2 text-white bg-danger">
-    //       <h1>Google Book Search</h1>
-    //     </Jumbotron>
-    //   </Container>
-    // </div>
   );
 }
 

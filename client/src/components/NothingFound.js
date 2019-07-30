@@ -14,9 +14,6 @@ function wrongPage() {
           >
             <h1 className="text-white">Book Not Found</h1>
             <h1>
-              <span role="img" aria-label="Face With Rolling Eyes Emoji">
-                🙄
-              </span>
               <p />
               <a href="/" className="btn btn-lg btn-success mt-5">
                 Take me Home
